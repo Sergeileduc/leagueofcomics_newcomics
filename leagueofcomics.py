@@ -16,6 +16,26 @@ def fetch_issues(publisher=None,
                  week=False,
                  m=None, y=None,
                  firsts_only=False):
+    """Fetch new comics on leagueofcomics.
+
+    Keyword Arguments:
+        publisher {str} -- Publisher : DC or Marvel or Indie or None (All) (default: {None})
+        week {bool} -- Week or Month mode (default: {False})
+        m {int} -- month (default: {None})
+        y {int} -- year (default: {None})
+        firsts_only {bool} -- #1 only ? (default: {False})
+
+    Returns:
+        list -- list of comics formated as :
+        {"title": <title>,
+         "cover": <cover url>,
+         "url": <league of comics url>}
+
+    Examples:
+        issues = fetch_issues()
+        issues = fetch_issues(publisher="DC", week=True, firsts_only=True)
+        issues = fetch_issues(publisher="Marvel", firsts_only=True, m=2, y=2020)
+    """
     loc_url = "https://leagueofcomicgeeks.com"
     api_url = "https://leagueofcomicgeeks.com/comic/get_comics"
 
