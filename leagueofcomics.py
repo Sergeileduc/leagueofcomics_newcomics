@@ -83,7 +83,8 @@ def fetch_issues(publisher=None,
     # Parse response
     json_ = resp.json()['list']
     soup = BeautifulSoup(json_, "html.parser")
-    raw_list = soup.select("li.media")
+    # raw_list = soup.select("li.media")  # old CSS selector
+    raw_list = soup.select('#comic-list-issues > li')
     # each element of raw_list is a comic html html div
     # with cover, title, synopsis, date, price, etc...
 
@@ -91,9 +92,9 @@ def fetch_issues(publisher=None,
     # {"title": <title>,
     #  "cover": <cover url>,
     #   "url": <league of comics url>}
-    comics = [{"title": r.select_one("div.comic-title").text,
-               "cover": r.select_one("div.comic-cover-art").img["data-original"],  # noqa: E501
-               "url": urljoin(loc_url, r.select_one("div.comic-title > a")["href"])}  # noqa: E501
+    comics = [{"title": r.select_one('div.title.color-primary > a').text,
+               "cover": r.find("div", class_="comic-cover-art").img['data-src'],  # noqa: E501
+               "url": urljoin(loc_url, r.select_one("div.title > a")["href"])}  # noqa: E501
               for r in raw_list]
 
     return comics
@@ -108,7 +109,7 @@ def print_issue(issue):
 
 
 # MAIN - TESTS
-# #1 current week
+#1 current week
 print("#####################################")
 print("Fetching DC #1 - week mode")
 print("-------------------------------------")
